@@ -1,7 +1,7 @@
 # ClInPy
 ## Clojure Inspired Python
 
-### `let`
+### `let(bindings: tuple, *exprs)`
 Inspired by :: https://clojuredocs.org/clojure.core/let
 
 `let` provides a way to create lexical bindings of data structures to named strings. The binding, and therefore the ability to resolve the binding, is available only within the lexical context of the `let`.
