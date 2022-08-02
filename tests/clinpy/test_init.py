@@ -1,15 +1,18 @@
 from math import factorial
-import clinpy
+from clinpy import let
+from operator import add
 
-def add(x, y): return x + y
 
 def test_let():
-    assert \
-        clinpy.let(
+    assert (
+        let(
             (
-                "let:a", sum([1,2,3]),
-                "let:b", (pow, "let:a", 2),
-                "let:c", (add, "let:a", "let:b")
+                "let:a", sum([1, 2, 3]),            # 6
+                "let:b", (pow, "let:a", 2),         # 36
+                "let:c", (add, "let:a", "let:b"),   # 42
             ),
-            (print, "let:c")
-        ) == 1
+            (print, "let:c"),
+            (add, "let:c", 10),                     # 52
+        )
+        == 52
+    )
