@@ -22,20 +22,32 @@ def _form_symbol(form):
     return form[0]
 
 
-def _form_args(state, form):
+def _callable_args(state, form):
     return map(partial(_arg_val, state), form[1:])
 
 
+def _listy_args(state, form):
+    return map(partial(_arg_val, state), form)
+
+
 def _is_callable_form(form):
-    return isinstance(form, tuple)
+    return type(form) is tuple and callable(form[0])
+
+
+def _is_listy_form(form):
+    return type(form) in [list, tuple]
 
 
 def _eval_binding(state, binding):
     if _is_callable_form(_binding_form(binding)):
         return state | {
             _binding_key(binding): _form_symbol(_binding_form(binding))(
-                *_form_args(state, _binding_form(binding))
+                *_callable_args(state, _binding_form(binding))
             )
+        }
+    elif _is_listy_form(_binding_form(binding)):
+        return state | {
+            _binding_key(binding): list(_listy_args(state, _binding_form(binding)))
         }
     else:
         return state | {_binding_key(binding): _binding_form(binding)}

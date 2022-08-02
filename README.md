@@ -14,7 +14,9 @@ from clinpy import let
 
 let(
     (
-        "let:a", sum([1, 2, 3]),            # 6
+        "let:aa", 2,                        # 2
+        "let:aaa", [1, "let:aa", 3],        # [1, 2, 3]
+        "let:a", (sum, "let:aaa"),          # 6
         "let:b", (pow, "let:a", 2),         # 36
         "let:c", (add, "let:a", "let:b"),   # 42
     ),
