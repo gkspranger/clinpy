@@ -42,9 +42,7 @@ def _eval_binding(state, binding):
 
 
 def _named_bindings(bindings):
-    return reduce(
-        lambda acc, binding: _eval_binding(acc, binding), _chunk_bindings(bindings), {}
-    )
+    return reduce(_eval_binding, _chunk_bindings(bindings), {})
 
 
 def _expr_symbol(expr):
@@ -66,7 +64,7 @@ def let(bindings, *exprs):
     the binding-forms are bound to their respective init-exprs or parts
     therein."""
     return reduce(
-        lambda acc, expr: _eval_expr(acc, expr),
+        _eval_expr,
         exprs,
         {"exprs": [], "bindings": _named_bindings(bindings)},
     )["exprs"][-1]
